@@ -32,12 +32,14 @@ Print an integer denoting the zero-indexed position of the character that makes 
 
 ## How to run
 
-- `npm i`
-- `npm start`
-
 ### Prerequisites
 
 - Must have Node installed locally
+
+### Instructions
+
+- `npm i`
+- `npm start`
 
 ## Additional Info
 

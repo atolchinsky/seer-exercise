@@ -32,7 +32,13 @@ function question(questionString: string): Promise<string> {
 function charIndexToCreatePalindrome(S: string): number {
   let indextoRemove: number = -1
 
-  //TODO: account for possibility of multiple characters
+  // TODO: This algorithm can be improved based on a few scenarios:
+  // 1. If the goal is to find the first character removal to create an palindrome, we can leave the for loop as is.
+  // 2. If the goal is to find a single character and assumes only a single problematic character exists,
+  //    we can loop through only half of the char array, and check the tail end for the problematic character.
+  // 3. If the goal is to find all of the characters, we can loop through only half of the char array, and return an array
+  //    of numbers with each potential index that can be removed.
+
   if (S && S.length > 0 && !isPalindrome(S)) {
     for (let i = 0; i < S.length; i++) {
       const testS: string = removeCharAtIndexFromString(S, i)

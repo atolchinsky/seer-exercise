@@ -1,36 +1,36 @@
 import { isPalindrome, removeCharAtIndexFromString } from './helper'
 import * as readline from 'readline'
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
 async function init(): Promise<void> {
-  const answer: string = await question('How many palindome tests would you like to try?\n')
-  if (Number(answer) != NaN) {
-    await askQuestions(Number(answer))
+  const userInterface = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+
+  const answer: string = await question('How many palindome tests would you like to try?\n', userInterface)
+  if (typeof answer != 'number' || answer <= 0) {
+    await askQuestions(Number(answer), userInterface)
   } else {
     console.log('Your answer must be a valid number')
   }
-  rl.close()
+  userInterface.close()
 }
 
-async function askQuestions(numberOfQuestions: number): Promise<void> {
+async function askQuestions(numberOfQuestions: number, userInterface: readline.Interface): Promise<void> {
   for (let i = 0; i < numberOfQuestions; i++) {
-    const S: string = await question('Which string would you like try to make a palindrome?\n')
+    const S: string = await question('Which string would you like try to make a palindrome?\n', userInterface)
 
-    const n: number = charIndexToCreatePalindrome(S)
-    console.log(`RESULT: ${S} will be a palindome by removing the char at index ${n}\n`)
+    const charIndexToRemove: number = charIndexToCreatePalindrome(S)
+    console.log(`RESULT: ${S} will be a palindome by removing the char at index ${charIndexToRemove}\n`)
   }
 }
 
-function question(questionString: string): Promise<string> {
-  return new Promise<string>((resolve) => rl.question(questionString, (a) => resolve(a)))
+function question(questionString: string, userInterface: readline.Interface): Promise<string> {
+  return new Promise<string>((resolve) => userInterface.question(questionString, (a) => resolve(a)))
 }
 
 function charIndexToCreatePalindrome(S: string): number {
-  let indextoRemove: number = -1
+  let indexToRemove: number = -1
 
   // TODO: This algorithm can be improved based on a few scenarios:
   // 1. If the goal is to find the first character removal to create an palindrome, we can leave the for loop as is.
@@ -43,15 +43,15 @@ function charIndexToCreatePalindrome(S: string): number {
     for (let i = 0; i < S.length; i++) {
       const testS: string = removeCharAtIndexFromString(S, i)
       if (isPalindrome(testS)) {
-        indextoRemove = i
+        indexToRemove = i
         break
       }
     }
   } else {
-    return indextoRemove
+    return indexToRemove
   }
 
-  return indextoRemove
+  return indexToRemove
 }
 
 init()

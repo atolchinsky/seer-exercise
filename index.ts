@@ -6,7 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
-async function init() {
+async function init(): Promise<void> {
   const answer: string = await question('How many palindome tests would you like to try?\n')
   if (Number(answer) != NaN) {
     await askQuestions(Number(answer))
@@ -16,22 +16,23 @@ async function init() {
   rl.close()
 }
 
-async function askQuestions(numberOfQuestions: number) {
+async function askQuestions(numberOfQuestions: number): Promise<void> {
   for (let i = 0; i < numberOfQuestions; i++) {
     const S: string = await question('Which string would you like try to make a palindrome?\n')
 
     const n: number = charIndexToCreatePalindrome(S)
-    console.log(`${S} will be a palindome by removing the char at index ${n}`)
+    console.log(`RESULT: ${S} will be a palindome by removing the char at index ${n}\n`)
   }
 }
 
-function question(questionString: string) {
+function question(questionString: string): Promise<string> {
   return new Promise<string>((resolve) => rl.question(questionString, (a) => resolve(a)))
 }
 
 function charIndexToCreatePalindrome(S: string): number {
   let indextoRemove: number = -1
 
+  //TODO: account for possibility of multiple characters
   if (S && S.length > 0 && !isPalindrome(S)) {
     for (let i = 0; i < S.length; i++) {
       const testS: string = removeCharAtIndexFromString(S, i)
